@@ -1,7 +1,11 @@
-module tecladoNumerico(IO, numero, reset);
+module tecladoNumerico(IO, numero, reset, HEX3, HEX2, HEX1, HEX0);
 	
 	input [0:9] IO;
+	input reset;
+	
 	output reg [13:0] numero;
+	output [0:6] HEX3, HEX2, HEX1, HEX0;
+	
 	reg [3:0] [0:3] vetorNumero;
 	reg [1:0] posicao;
 	
