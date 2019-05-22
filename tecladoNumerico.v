@@ -1,7 +1,7 @@
 module tecladoNumerico(IO, numero, reset, HEX3, HEX2, HEX1, HEX0);
 	
 	input [0:9] IO;
-	input reset;
+	input reset; 
 	
 	output reg real numero;
 	output [0:6] HEX3, HEX2, HEX1, HEX0;
