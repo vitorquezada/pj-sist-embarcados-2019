@@ -1,15 +1,16 @@
-`include "tecladoNumerico.v"
 `include "bcd7seg.v"
 
-module detectorDeCancer(IO, HEX5, HEX3, HEX2, HEX1, HEX0);
-
-	input [0:11] IO;
-	output [0:6] HEX5, HEX3, HEX2, HEX1, HEX0;
+module detectorDeCancer(IO, clear, prox, HEX5, HEX4, HEX3, HEX2, HEX1, HEX0);
+	input [0:9] IO;
+	input clear, prox;
+	output [0:6] HEX5, HEX4, HEX3, HEX2, HEX1, HEX0;
 	
+	reg [3:0] estado, resultado;	
+	reg [3:0] numeroVetorizado [0:3] [0:6];
+	reg [1:0] posicao;
 	reg real entradas [0:6];
-	reg [0:0] resultado;
-	reg [3:0] estado;
-
+	
+	integer i, j;
 
 	parameter Pregnancies = 0,
 			  Glucose = 1,
@@ -20,37 +21,63 @@ module detectorDeCancer(IO, HEX5, HEX3, HEX2, HEX1, HEX0);
 			  Age = 6,
 			  Outcome = 7;
 
-	always @(posedge IO)
-		// Reset
-		if(IO[11] || (IO[10] && estado == Outcome))
+	task tecladoNumerico;
+		input [0:9] IO;
+
+		begin
+			case (1)
+				IO[0]: numeroVetorizado[estado][posicao] = 0;
+				IO[1]: numeroVetorizado[estado][posicao] = 1;
+				IO[2]: numeroVetorizado[estado][posicao] = 2;
+				IO[3]: numeroVetorizado[estado][posicao] = 3;
+				IO[4]: numeroVetorizado[estado][posicao] = 4;
+				IO[5]: numeroVetorizado[estado][posicao] = 5;
+				IO[6]: numeroVetorizado[estado][posicao] = 6;
+				IO[7]: numeroVetorizado[estado][posicao] = 7;
+				IO[8]: numeroVetorizado[estado][posicao] = 8;
+				IO[9]: numeroVetorizado[estado][posicao] = 9;
+			endcase
+			
+			posicao = posicao + 1;
+			entradas[estado] = numeroVetorizado[estado][0] + numeroVetorizado[estado][1] * 10  + numeroVetorizado[estado][2] * 100 + numeroVetorizado[estado][3] * 1000;
+		end
+	endtask
+
+	always @(posedge IO or posedge clear or posedge prox)
+	begin	
+		if (clear || (prox && estado == Outcome))
 		begin
 			estado = 0;
 			resultado = 0;
-			entradas[0] = 0;
-			entradas[1] = 0;
-			entradas[2] = 0;
-			entradas[3] = 0;
-			entradas[4] = 0;
-			entradas[5] = 0;
-			entradas[6] = 0;
+			posicao = 0;
+			for (i = 0; i <= 6; i = i + 1)
+			begin
+				entradas[i] = 0;
+				for(j = 0; j <= 3; j = j + 1) numeroVetorizado[i][j] = 0;
+			end
 		end
-		// Próximo
-		else if(IO[10])
+		else if (prox)
 		begin
 			estado = estado + 1;			
 			if(estado == Outcome)
 			begin
 				// Chama a função que calcula.
-				// resultado = funcao
-				bcd7seg digito1(resultado, HEX3);
-				bcd7seg digito2(resultado, HEX2);
-				bcd7seg digito1(resultado, HEX1);
-				bcd7seg digito0(resultado, HEX0);
+			    // resultado = funcao
+				numeroVetorizado[estado][3] = 0;
+				numeroVetorizado[estado][2] = 0;
+				numeroVetorizado[estado][1] = 0;
+				numeroVetorizado[estado][3] = resultado;
 			end
 		end
-		// Digitando o número.
 		else
-			tecladoNumerico TN(IO[0:9], IO[10], entradas[estado], HEX3, HEX2, HEX1, HEX0);
-		
-		bcd7seg digito4(estado, HEX5);	
+			tecladoNumerico(IO);
+	end
+
+	bcd7seg digit5 (estado, HEX5);
+	bcd7seg digit4 (4'h0, HEX4);
+	bcd7seg digit3 (numeroVetorizado[estado][3], HEX3);
+	bcd7seg digit2 (numeroVetorizado[estado][2], HEX2);
+	bcd7seg digit1 (numeroVetorizado[estado][1], HEX1);
+	bcd7seg digit0 (numeroVetorizado[estado][0], HEX0);
+
 endmodule
