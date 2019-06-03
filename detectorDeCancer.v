@@ -42,8 +42,10 @@ module detectorDeCancer(IO, clear, prox, HEX5, HEX4, HEX3, HEX2, HEX1, HEX0);
 			entradas[estado] = numeroVetorizado[estado][0] + numeroVetorizado[estado][1] * 10  + numeroVetorizado[estado][2] * 100 + numeroVetorizado[estado][3] * 1000;
 		end
 	endtask
+	
+	assign digitou = IO[0] || IO[1]|| IO[2]|| IO[3]|| IO[4]|| IO[5]|| IO[6]|| IO[7]|| IO[8]|| IO[9];
 
-	always @(posedge IO or posedge clear or posedge prox)
+	always @(posedge digitou or posedge clear or posedge prox)
 	begin	
 		if (clear || (prox && estado == Outcome))
 		begin
