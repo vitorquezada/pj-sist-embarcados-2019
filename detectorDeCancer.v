@@ -47,6 +47,7 @@ module detectorDeCancer(IO, clear, prox, HEX5, HEX4, HEX3, HEX2, HEX1, HEX0);
 	begin	
 		if (clear || (prox && estado == Outcome))
 		begin
+			$display("Clear");
 			estado = 0;
 			resultado = 0;
 			posicao = 0;
@@ -59,6 +60,7 @@ module detectorDeCancer(IO, clear, prox, HEX5, HEX4, HEX3, HEX2, HEX1, HEX0);
 		else if (prox)
 		begin
 			estado = estado + 1;			
+			$display("Estado atual: %d", estado);
 			if(estado == Outcome)
 			begin
 				// Chama a função que calcula.
@@ -70,7 +72,10 @@ module detectorDeCancer(IO, clear, prox, HEX5, HEX4, HEX3, HEX2, HEX1, HEX0);
 			end
 		end
 		else
+		begin
 			tecladoNumerico(IO);
+			$display("Entrada do estado: %f", entradas[estado]);
+		end
 	end
 
 	bcd7seg digit5 (estado, HEX5);
