@@ -2,16 +2,16 @@
 Timing Analyzer Summary
 ------------------------------------------------------------
 
-Type  : Slow 1200mV 85C Model Setup 'ADC_CLK_10'
-Slack : -3.841
-TNS   : -62.591
-
 Type  : Slow 1200mV 85C Model Setup 'digitou'
-Slack : -3.741
-TNS   : -389.702
+Slack : -16.963
+TNS   : -2256.773
+
+Type  : Slow 1200mV 85C Model Setup 'ADC_CLK_10'
+Slack : -4.478
+TNS   : -68.647
 
 Type  : Slow 1200mV 85C Model Hold 'digitou'
-Slack : 0.322
+Slack : 0.340
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'ADC_CLK_10'
@@ -24,18 +24,18 @@ TNS   : -39.478
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'digitou'
 Slack : -1.403
-TNS   : -166.957
-
-Type  : Slow 1200mV 0C Model Setup 'ADC_CLK_10'
-Slack : -3.419
-TNS   : -54.711
+TNS   : -324.093
 
 Type  : Slow 1200mV 0C Model Setup 'digitou'
-Slack : -3.418
-TNS   : -351.007
+Slack : -15.503
+TNS   : -2066.653
+
+Type  : Slow 1200mV 0C Model Setup 'ADC_CLK_10'
+Slack : -4.017
+TNS   : -60.322
 
 Type  : Slow 1200mV 0C Model Hold 'digitou'
-Slack : 0.289
+Slack : 0.305
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Hold 'ADC_CLK_10'
@@ -48,30 +48,30 @@ TNS   : -39.478
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'digitou'
 Slack : -1.403
-TNS   : -166.957
+TNS   : -324.093
 
 Type  : Fast 1200mV 0C Model Setup 'digitou'
-Slack : -1.156
-TNS   : -109.336
+Slack : -6.600
+TNS   : -844.700
 
 Type  : Fast 1200mV 0C Model Setup 'ADC_CLK_10'
-Slack : -0.964
-TNS   : -11.925
+Slack : -1.252
+TNS   : -14.323
 
 Type  : Fast 1200mV 0C Model Hold 'digitou'
-Slack : 0.140
+Slack : 0.148
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Hold 'ADC_CLK_10'
-Slack : 0.159
+Slack : 0.158
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'ADC_CLK_10'
 Slack : -3.000
-TNS   : -29.923
+TNS   : -29.766
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'digitou'
 Slack : -1.000
-TNS   : -119.000
+TNS   : -231.000
 
 ------------------------------------------------------------
