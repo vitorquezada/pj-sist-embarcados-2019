@@ -14,8 +14,7 @@ module detectorDeDiabetes(SW, KEY, ADC_CLK_10, HEX5, HEX4, HEX3, HEX2, HEX1, HEX
 	assign LEDR = SW_corrigido;	
 	
 	parameter QtdBitsDecimais = 16; // Q16.16
-	parameter N = 6,
-			 // Pregnancies = 0,
+	parameter N = 5,
 			  Glucose = 0,
 			  BloodPressure = 1,
 			  SkinThickness = 2,
@@ -91,30 +90,30 @@ module detectorDeDiabetes(SW, KEY, ADC_CLK_10, HEX5, HEX4, HEX3, HEX2, HEX1, HEX
 			i = 4'b0000;
 			
 			/* CAMADA INTERMEDIARIA */
-			for (i = 0; i < (NEURONIOS - 1); i = i + 1) begin
-			w[0][i] = 16'b00000000_00010001;			
-			w[1][i] = 16'b00000000_00010001;			
-			w[2][i] = 16'b00000000_00010001;
-			w[3][i] = 16'b00000000_00010001; 
-			w[4][i] = 16'b00000000_00010001;
-			w[5][i] = 16'b00000000_00010001;
-			w[6][i] = 16'b00000000_00010001;
-			v[i] = 16'b00000000_00010001;
-			/* Soma */
-			f[i]  =   entradas[0]*w[0][i] +
-				entradas[1]*w[1][i] +
-				entradas[2]*w[2][i] +
-				entradas[3]*w[3][i] +
-				entradas[4]*w[4][i] +
-				entradas[5]*w[5][i]+
-				w[6][i]; //bias
+			for (i = 0; i < (NEURONIOS - 1); i = i + 1)
+			begin
+				w[0][i] = 16'b00000000_00010001;			
+				w[1][i] = 16'b00000000_00010001;			
+				w[2][i] = 16'b00000000_00010001;
+				w[3][i] = 16'b00000000_00010001; 
+				w[4][i] = 16'b00000000_00010001;
+				w[5][i] = 16'b00000000_00010001;
+				w[6][i] = 16'b00000000_00010001;
+				v[i] = 16'b00000000_00010001;
+				/* Soma */
+				f[i]  =   entradas[0]*w[0][i] +
+					entradas[1]*w[1][i] +
+					entradas[2]*w[2][i] +
+					entradas[3]*w[3][i] +
+					entradas[4]*w[4][i] +
+					entradas[5]*w[5][i]+
+					w[6][i]; //bias
 
-			/* Relu com limite superior*/
-			if(f[i] > um)
-			f[i] = 16'b00000001_00000000;//um;
-			else if(f[i] < zero)
-			f[i] = 16'b00000000_00000000;//zero;
-				
+				/* Relu com limite superior*/
+				if(f[i] > um)
+					f[i] = 16'b00000001_00000000;//um;
+				else if(f[i] < zero)
+					f[i] = 16'b00000000_00000000;//zero;
 			end
 
 			/* CAMADA SAIDA */
@@ -128,13 +127,13 @@ module detectorDeDiabetes(SW, KEY, ADC_CLK_10, HEX5, HEX4, HEX3, HEX2, HEX1, HEX
 			v[7];
 
 			if(     y > 32'b0000000000000000_1001100110011001)      //y > 0.6
-			resultado = 4;              //y = 3;
+				resultado = 4;              //y = 3;
 			else if(y > 32'b0000000000000000_1000000000000000) // 0.6 > y > 0.5
-			resultado = 5;              //y = 2;
+				resultado = 5;              //y = 2;
 			else if(y > 32'b0000000000000000_0110011001100110) // 0.5 > y > 0.4
-			resultado = 6;              //y = 1;
+				resultado = 6;              //y = 1;
 			else                        //y < 0.4
-			resultado = 2;              //y = 0;
+				resultado = 2;              //y = 0;
 		end
 	endtask
 	//########################################################################################
@@ -184,7 +183,7 @@ module detectorDeDiabetes(SW, KEY, ADC_CLK_10, HEX5, HEX4, HEX3, HEX2, HEX1, HEX
 			else
 			begin
 				estado = estado + 1;
-				if(estado == 6)
+				if(estado == Outcome)
 				begin
 					for(i = 0; i < N; i = i + 1)
 					begin
@@ -193,7 +192,7 @@ module detectorDeDiabetes(SW, KEY, ADC_CLK_10, HEX5, HEX4, HEX3, HEX2, HEX1, HEX
 
 					mlp(); //########################################################
 
-					numeroVetorizado[estado][3] = 8;
+					numeroVetorizado[estado][3] = 0;
 					numeroVetorizado[estado][2] = 0;
 					numeroVetorizado[estado][1] = 0;
 					numeroVetorizado[estado][0] = resultado;
