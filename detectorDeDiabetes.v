@@ -1,3 +1,5 @@
+`include "bcd7seg.v"
+
 module detectorDeDiabetes(SW, KEY, ADC_CLK_10, HEX5, HEX4, HEX3, HEX2, HEX1, HEX0, LEDR);
 	input [0:9] SW;
 	input [0:1] KEY;//[0] - Clear / [1] - Proximo
@@ -32,7 +34,7 @@ module detectorDeDiabetes(SW, KEY, ADC_CLK_10, HEX5, HEX4, HEX3, HEX2, HEX1, HEX
 	reg signed [31:0] entradas [0:N];
 	reg signed [63:0] entradasMultiplicacao [0:N];
 	
-	parameter [3:0] NEURONIOS = 8; /* 8 neuronios camada intermediaria */
+	parameter [3:0] NEURONIOS = 4'b1000; /* 8 neuronios camada intermediaria */
 	reg signed [31:0] w [0:N][0:NEURONIOS]; /* camada intermediaria */
 	reg signed [31:0] v [0:NEURONIOS]; /* camada saida */
 	
@@ -80,13 +82,12 @@ module detectorDeDiabetes(SW, KEY, ADC_CLK_10, HEX5, HEX4, HEX3, HEX2, HEX1, HEX
 	//########################################################################################
 	task mlp;
 	
-		reg signed [31:0] f[0:N];
-		reg signed [63:0] aux64;
-		reg signed [31:0] y;
+		reg signed [63:0] f[0:N];
+		reg signed [63:0] y;
 		
 
-		parameter signed [31:0] zero = 0;
-		parameter signed [31:0] um = 32'b0000000000000001_0000000000000000;
+		parameter signed [63:0] zero = 0;
+		parameter signed [63:0] um = 64'b00000000000000000000000000000001_00000000000000000000000000000000;
 
 		begin
 			//Normalização simples:
@@ -119,32 +120,33 @@ module detectorDeDiabetes(SW, KEY, ADC_CLK_10, HEX5, HEX4, HEX3, HEX2, HEX1, HEX
 				/* Soma */
 				for(j = 0; j < N; j = j + 1)
 				begin
-					aux64 = entradas[j] * w[j][i];
-					f[i] = f[i] + aux64[47:16];
+					f[i] = f[i] + (entradas[j] * w[j][i]);
 				end
-				f[i] = f[i] + w[N][i]; //bias
+				f[i] = f[i] + (um * w[N][i]); //bias
 				
 				/* Relu com limite superior*/
-				if(f[i] > um)
+				if($signed(f[i]) > $signed(um))
 					f[i] = um;
-				else if(f[i] < zero)
+				else if($signed(f[i]) < $signed(zero))
 					f[i] = zero;
 			end
 
 			/* CAMADA SAIDA */
-			y = zero;
-			for(i = 0; i < NEURONIOS; i = i + 1)
-			begin
-				aux64 = f[i] * v[i];
-				y = y + aux64[47:16];
-			end
-			y = y + v[N];
+			y = f[0][47:16]*v[0]+
+				 f[1][47:16]*v[1]+
+				 f[2][47:16]*v[2]+
+				 f[3][47:16]*v[3]+
+				 f[4][47:16]*v[4]+
+				 f[5][47:16]*v[5]+
+				 f[6][47:16]*v[6]+
+				 f[7][47:16]*v[7]+
+				 um*v[8];
 				 
-			if(y > $signed(32'b0000000000000000_1001100110011001))      //y > 0.6
+			if($signed(y) > $signed(64'b00000000000000000000000000000000_10011001100110010000000000000000))      //y > 0.6
 				resultado = 3;              //y = 3;
-			else if(y > $signed(32'b0000000000000000_1000000000000000)) // 0.6 > y > 0.5
+			else if($signed(y) > $signed(64'b00000000000000000000000000000000_10000000000000000000000000000000)) // 0.6 > y > 0.5
 				resultado = 2;              //y = 2;
-			else if(y > $signed(32'b0000000000000000_0110011001100110)) // 0.5 > y > 0.4
+			else if($signed(y) > $signed(64'b00000000000000000000000000000000_01100110011001100000000000000000)) // 0.5 > y > 0.4
 				resultado = 1;              //y = 1;
 			else                        //y < 0.4
 				resultado = 0;              //y = 0;
@@ -166,6 +168,8 @@ module detectorDeDiabetes(SW, KEY, ADC_CLK_10, HEX5, HEX4, HEX3, HEX2, HEX1, HEX
 	
 	initial
 	begin
+	
+		$display("Iniciou");
 		taskClear();
 		
 		//first_layer_weights 2000 iterations
@@ -286,6 +290,7 @@ module detectorDeDiabetes(SW, KEY, ADC_CLK_10, HEX5, HEX4, HEX3, HEX2, HEX1, HEX
 				begin
 					for(i = 0; i < N; i = i + 1)
 					begin
+						$display("Entrada %d: %d", i, entradas[i]);
 						entradas[i] = entradas[i] << QtdBitsDecimais;
 					end
 

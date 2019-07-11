@@ -1,5 +1,5 @@
 Analysis & Synthesis report for detectorDeDiabetes
-Wed Jul 03 22:01:52 2019
+Wed Jul 10 19:52:58 2019
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -14,15 +14,14 @@ Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
   8. Registers Removed During Synthesis
-  9. Removed Registers Triggering Further Register Optimizations
- 10. General Register Statistics
- 11. Multiplexer Restructuring Statistics (Restructuring Performed)
- 12. Parameter Settings for User Entity Instance: Top-level Entity: |detectorDeDiabetes
- 13. Port Connectivity Checks: "bcd7seg:digit4"
- 14. Port Connectivity Checks: "bcd7seg:digit5"
- 15. Post-Synthesis Netlist Statistics for Top Partition
- 16. Elapsed Time Per Partition
- 17. Analysis & Synthesis Messages
+  9. General Register Statistics
+ 10. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 11. Parameter Settings for User Entity Instance: Top-level Entity: |detectorDeDiabetes
+ 12. Port Connectivity Checks: "bcd7seg:digit4"
+ 13. Port Connectivity Checks: "bcd7seg:digit5"
+ 14. Post-Synthesis Netlist Statistics for Top Partition
+ 15. Elapsed Time Per Partition
+ 16. Analysis & Synthesis Messages
 
 
 
@@ -48,7 +47,7 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Wed Jul 03 22:01:52 2019       ;
+; Analysis & Synthesis Status        ; Successful - Wed Jul 10 19:52:58 2019       ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; detectorDeDiabetes                          ;
 ; Top-level Entity Name              ; detectorDeDiabetes                          ;
@@ -232,33 +231,6 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +-----------------------------------------+--------------------+
 ; Register name                           ; Reason for Removal ;
 +-----------------------------------------+--------------------+
-; entradas[2][14]                         ; Lost fanout        ;
-; entradas[2][13]                         ; Lost fanout        ;
-; entradas[2][12]                         ; Lost fanout        ;
-; entradas[2][11]                         ; Lost fanout        ;
-; entradas[2][10]                         ; Lost fanout        ;
-; entradas[2][9]                          ; Lost fanout        ;
-; entradas[2][8]                          ; Lost fanout        ;
-; entradas[2][7]                          ; Lost fanout        ;
-; entradas[2][6]                          ; Lost fanout        ;
-; entradas[2][5]                          ; Lost fanout        ;
-; entradas[2][4]                          ; Lost fanout        ;
-; entradas[2][3]                          ; Lost fanout        ;
-; entradas[2][2]                          ; Lost fanout        ;
-; entradas[2][1]                          ; Lost fanout        ;
-; entradas[2][0]                          ; Lost fanout        ;
-; entradas[3][31]                         ; Lost fanout        ;
-; entradas[3][30]                         ; Lost fanout        ;
-; entradas[3][29]                         ; Lost fanout        ;
-; entradas[3][28]                         ; Lost fanout        ;
-; entradas[3][27]                         ; Lost fanout        ;
-; entradas[3][26]                         ; Lost fanout        ;
-; entradas[3][25]                         ; Lost fanout        ;
-; entradas[3][24]                         ; Lost fanout        ;
-; entradas[3][23]                         ; Lost fanout        ;
-; entradas[3][22]                         ; Lost fanout        ;
-; entradas[3][21]                         ; Lost fanout        ;
-; entradas[3][20]                         ; Lost fanout        ;
 ; entradas[3][19]                         ; Lost fanout        ;
 ; entradas[3][18]                         ; Lost fanout        ;
 ; entradas[3][17]                         ; Lost fanout        ;
@@ -439,6 +411,33 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; entradas[8][2]                          ; Lost fanout        ;
 ; entradas[8][1]                          ; Lost fanout        ;
 ; entradas[8][0]                          ; Lost fanout        ;
+; entradas[3][20]                         ; Lost fanout        ;
+; entradas[3][21]                         ; Lost fanout        ;
+; entradas[3][22]                         ; Lost fanout        ;
+; entradas[3][23]                         ; Lost fanout        ;
+; entradas[3][24]                         ; Lost fanout        ;
+; entradas[3][25]                         ; Lost fanout        ;
+; entradas[3][26]                         ; Lost fanout        ;
+; entradas[3][27]                         ; Lost fanout        ;
+; entradas[3][28]                         ; Lost fanout        ;
+; entradas[3][29]                         ; Lost fanout        ;
+; entradas[3][30]                         ; Lost fanout        ;
+; entradas[3][31]                         ; Lost fanout        ;
+; entradas[2][0]                          ; Lost fanout        ;
+; entradas[2][1]                          ; Lost fanout        ;
+; entradas[2][2]                          ; Lost fanout        ;
+; entradas[2][3]                          ; Lost fanout        ;
+; entradas[2][4]                          ; Lost fanout        ;
+; entradas[2][5]                          ; Lost fanout        ;
+; entradas[2][6]                          ; Lost fanout        ;
+; entradas[2][7]                          ; Lost fanout        ;
+; entradas[2][8]                          ; Lost fanout        ;
+; entradas[2][9]                          ; Lost fanout        ;
+; entradas[2][10]                         ; Lost fanout        ;
+; entradas[2][11]                         ; Lost fanout        ;
+; entradas[2][12]                         ; Lost fanout        ;
+; entradas[2][13]                         ; Lost fanout        ;
+; entradas[2][14]                         ; Lost fanout        ;
 ; entradas[2][15]                         ; Lost fanout        ;
 ; entradas[2][16]                         ; Lost fanout        ;
 ; entradas[2][17]                         ; Lost fanout        ;
@@ -522,16 +521,6 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; entradas[0][31]                         ; Lost fanout        ;
 ; Total Number of Removed Registers = 288 ;                    ;
 +-----------------------------------------+--------------------+
-
-
-+-------------------------------------------------------------------------------+
-; Removed Registers Triggering Further Register Optimizations                   ;
-+-----------------+--------------------+----------------------------------------+
-; Register name   ; Reason for Removal ; Registers Removed due to This Register ;
-+-----------------+--------------------+----------------------------------------+
-; entradas[2][14] ; Lost Fanouts       ; entradas[2][0]                         ;
-; entradas[2][8]  ; Lost Fanouts       ; entradas[2][1]                         ;
-+-----------------+--------------------+----------------------------------------+
 
 
 +------------------------------------------------------+
@@ -639,7 +628,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:02:45     ;
+; Top            ; 00:03:42     ;
 +----------------+--------------+
 
 
@@ -649,7 +638,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Wed Jul 03 21:58:54 2019
+    Info: Processing started: Wed Jul 10 19:49:04 2019
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off detectorDeDiabetes -c detectorDeDiabetes
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -718,9 +707,9 @@ Info (21057): Implemented 496 device resources after synthesis - the final resou
     Info (21059): Implemented 52 output pins
     Info (21061): Implemented 431 logic cells
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 49 warnings
-    Info: Peak virtual memory: 4783 megabytes
-    Info: Processing ended: Wed Jul 03 22:01:52 2019
-    Info: Elapsed time: 00:02:58
-    Info: Total CPU time (on all processors): 00:03:12
+    Info: Peak virtual memory: 4779 megabytes
+    Info: Processing ended: Wed Jul 10 19:52:58 2019
+    Info: Elapsed time: 00:03:54
+    Info: Total CPU time (on all processors): 00:04:06
 
 
